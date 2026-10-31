@@ -1,0 +1,38 @@
+# Pac-Man contribution graph for the Cracka813 profile README.
+# Action: abozanona/pacman-contribution-graph (inputs checked against its action.yml 2026-10-31).
+# It reads the public contribution calendar — private work is already counted there because
+# "Private contributions" is ON for Cracka813 (verified 2026-10-31), so no extra token is needed.
+# Output: pacman-/breakout-contribution-graph(.svg / -dark.svg) on the `output` branch, embedded by README.md.
+name: Generate Pac-Man contribution graph
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate graph
+        uses: abozanona/pacman-contribution-graph@main
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          games: 'pacman,breakout'
+          hide_month_labels: 'false'
+
+      - name: Push to output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

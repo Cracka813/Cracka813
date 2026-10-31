@@ -1,0 +1,18 @@
+# Never commit SSH keys / secrets to this repo (safety net).
+# Real mirror keypair lives in the private key vault OUTSIDE LIVE Files.
+id_ed25519
+id_ed25519.pub
+id_rsa
+id_rsa.pub
+*_deploy
+*_deploy.pub
+*_mirror
+*_mirror.pub
+*.pem
+*.key
+KEYS_SETUP.md
+
+# OS / editor noise
+Thumbs.db
+.DS_Store
+desktop.ini
